@@ -1,0 +1,24 @@
+{
+  "mcpServers": {
+    "postgres": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-postgres",
+        "postgresql://postgres.zmruhqdtidrtggcoojzm:G3c9h.%2C1%3F0EH@aws-0-eu-west-1.pooler.supabase.com:5432/postgres"
+      ]
+    },
+    "superset": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "superset-mcp"
+      ],
+      "env": {
+        "SUPERSET_BASE_URL": "http://localhost:8088",
+        "SUPERSET_USERNAME": "admin",
+        "SUPERSET_PASSWORD": "BI2026!"
+      }
+    }
+  }
+}
