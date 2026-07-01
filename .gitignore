@@ -1,0 +1,13 @@
+# Environment
+.env
+*.env
+
+# Apache Superset source code
+superset/
+
+# Gemini local settings
+.gemini/settings.json
+
+# Python
+__pycache__/
+*.pyc
