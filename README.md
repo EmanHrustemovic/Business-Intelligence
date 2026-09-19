@@ -1,82 +1,106 @@
-# Olist Business Intelligence Platform
+# 🏢 Olist E-Commerce Business Intelligence Platform
 
-
-This project implements a Star Schema data warehouse using PostgreSQL (Supabase) and a Python-based ETL process for the **Olist Brazilian E-Commerce Dataset**. The project also includes interactive business intelligence dashboards developed in Apache Superset.
+An end-to-end **AI-powered Business Intelligence solution** built on the Brazilian Olist E-Commerce dataset. The platform features a PostgreSQL Star Schema data warehouse, automated Python ETL pipeline, MCP/AI integration, and three interactive Apache Superset dashboards.
 
 ---
 
-# Project Structure
+## 📊 Key Business Metrics
+
+| Metric | Value |
+|--------|-------|
+| 💰 Total Revenue | **$20.3M** |
+| 📦 Total Orders | **98,700+** |
+| 👥 Total Customers | **98,700+** |
+| ⭐ Average Review Score | **4.03 / 5** |
+| 💵 Average Order Value | **$137.75** |
+| 🚚 Average Freight Cost | **$19.99** |
+
+---
+
+## 🖼️ Dashboards
+
+### Dashboard 1 — Executive Sales Overview
+![Executive Sales Overview](screenshots/dashboard%201.png)
+
+Key charts: Revenue by Month · Top 10 Sellers by Revenue · Top 10 Product Categories · Orders by Review Score · Orders by Payment Type
+
+---
+
+### Dashboard 2 — Operational Deep-Dive
+![Operational Deep-Dive](screenshots/dashboard%202.png)
+
+Key charts: Orders by Payment Type · Orders by Review Score · Top Sellers by Revenue · Top Categories by Revenue · Average Order Value by Review Score · Average Freight Cost by Installments
+
+---
+
+### Dashboard 3 — Trend & Revenue Monitor
+![Trend & Revenue Monitor](screenshots/dashboard%20NO.3.png)
+
+Key charts: Revenue by Month (trend line) · Revenue by Payment Type · Top 10 Product Categories · Top 10 Sellers · Average Order Value by Review Score
+
+---
+
+## 🏗️ Architecture
 
 ```
-etl_load.py                     Main ETL script
-requirements.txt                Python dependencies
-README.md                       Project documentation
-.gitignore
-.env.example
-.gemini/settings.json           Gemini CLI MCP configuration
-
-olist_customers_dataset.csv
-olist_geolocation_dataset.csv
-olist_order_items_dataset.csv
-olist_order_payments_dataset.csv
-olist_order_reviews_dataset.csv
-olist_orders_dataset.csv
-olist_products_dataset.csv
-olist_sellers_dataset.csv
-product_category_name_translation.csv
-
-schema_database.png   Star Schema 
-golden_queries.sql            Evaluation SQL test suite
+CSV Datasets (Olist)
+        ↓
+  Python ETL (etl_load.py)
+        ↓
+PostgreSQL Star Schema (Supabase)
+        ↓
+Apache Superset Dashboards
+        ↑
+   Gemini CLI + MCP
+(AI-assisted development & natural language querying)
 ```
 
 ---
 
-# Star Schema Design
+## 🗄️ Star Schema Design
 
-The data warehouse follows a Star Schema optimized for analytical reporting.
+**Fact Table:**
+- `fact_order_items` — transactional measures (revenue, freight, quantity)
 
-### Dimension Tables
-
-* dim_customers
-* dim_sellers
-* dim_products
-* dim_orders_context
-
-### Fact Table
-
-* fact_order_items
-
-The ETL process integrates multiple Olist datasets into a single analytical Star Schema. Payment information, review scores and translated product categories are merged into the fact table during loading to simplify analytical queries.
-The schema follows a classic star schema where fact_order_items stores transactional measures while the dimension tables provide descriptive business context.
+**Dimension Tables:**
+- `dim_customers` — customer demographics and location
+- `dim_sellers` — seller information
+- `dim_products` — product categories and attributes
+- `dim_orders_context` — order timing and status context
 
 ---
 
-# Prerequisites
+## 📁 Project Structure
 
-* Python 3.10+
-* PostgreSQL (Supabase)
-* Apache Superset
-* Virtual Environment (recommended)
+```
+├── etl_load.py                  # Main ETL script
+├── golden_queries.sql           # SQL evaluation test suite
+├── schema_database.png          # Star Schema diagram
+├── requirements.txt             # Python dependencies
+├── .env.example                 # Environment variables template
+├── .gemini/settings.json        # Gemini CLI MCP configuration
+├── screenshots/                 # Dashboard screenshots
+│   ├── dashboard 1.png
+│   ├── dashboard 2.png
+│   └── dashboard NO.3.png
+└── README.md
+```
 
 ---
 
-# Setup Instructions
+## ⚙️ Setup Instructions
 
-## Install Dependencies
+### 1. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
----
+### 2. Configure Database Connection
 
-## Configure Database Connection
+Create a `.env` file based on `.env.example`:
 
-Create a `.env` file or configure the PostgreSQL connection inside Gemini CLI.
-
-Example:
-
-```text
+```env
 POSTGRES_HOST=your_host
 POSTGRES_PORT=5432
 POSTGRES_DATABASE=your_database
@@ -84,158 +108,57 @@ POSTGRES_USER=your_user
 POSTGRES_PASSWORD=your_password
 ```
 
----
-
-## Run ETL
+### 3. Run ETL Pipeline
 
 ```bash
 python etl_load.py
 ```
 
 The ETL process:
-
-* Loads CSV files
-* Cleans missing values
-* Removes duplicates
-* Creates surrogate keys
-* Loads dimension tables
-* Loads the fact table
-
-The script can be executed multiple times safely thanks to idempotent loading.
+- Loads 9 CSV datasets (100,000+ records)
+- Cleans missing values and removes duplicates
+- Creates surrogate keys
+- Loads dimension tables before the fact table
+- Supports **idempotent loading** (safe to run multiple times)
 
 ---
 
-# Dashboards
+## 🤖 AI Integration (MCP)
 
-The project contains three Apache Superset dashboards.
-
-### Dashboard 1
-
-Executive Sales Overview
-
-Contains:
-
-* Revenue by Month
-* Orders by Month
-* Revenue by Product Category
-* Revenue by Seller
-* Revenue by State
-* Average Review Score
+This project demonstrates **AI-assisted BI development** using:
+- **Gemini CLI** — for natural language querying over the data warehouse
+- **PostgreSQL MCP Server** — connecting AI to the live database
+- **Apache Superset MCP Server** — AI-assisted dashboard generation
+- **Golden Queries** — SQL evaluation suite for validating AI-generated queries
 
 ---
 
-### Dashboard 2
+## 🛠️ Tech Stack
 
-Operational Deep-Dive
-
-Contains:
-
-* Orders by Payment Type
-* Orders by Review Score
-* Top Sellers by Revenue
-* Top Categories by Revenue
-* Average Order Value by Review Score
-* Average Freight Cost by Installments
+| Layer | Technology |
+|-------|-----------|
+| Data Warehouse | PostgreSQL (Supabase) |
+| Schema | Star Schema |
+| ETL | Python (pandas, psycopg2) |
+| Dashboards | Apache Superset |
+| AI Integration | Gemini CLI + MCP |
+| Data Source | Olist Brazilian E-Commerce Dataset |
 
 ---
 
-### Dashboard 3
+## 📈 Future Improvements
 
-Trend & Revenue Monitor
-
-Contains:
-
-* Total Revenue KPI
-* Total Orders KPI
-* Average Review Score KPI
-* Revenue by Month
-* Revenue by Payment Type
-* Top Categories
-* Top Sellers
-* Average Order Value by Review Score
-
----
-
-# Built with Gemini CLI
-
-This project was developed using **Gemini CLI** together with:
-
-* PostgreSQL MCP Server
-* Apache Superset MCP Server
-* Supabase PostgreSQL
-
----
-
-# Example Development Prompts
-
-The project was developed using prompts similar to the following:
-
-## 1. Data Warehouse Design
-
-* Design a Star Schema for the Olist dataset.
-* Create PostgreSQL dimension and fact tables.
-* Generate SQL DDL scripts.
-
-## 2. ETL Development
-
-* Generate a Python ETL script using pandas and psycopg2.
-* Handle NULL values.
-* Perform data cleaning.
-* Remove duplicate records.
-* Translate Portuguese product categories
-* Load dimensions before the fact table.
-* Implement idempotent loading.
-
-
-## 3. Dashboard Development
-
-* Connect Apache Superset to PostgreSQL.
-* Design Executive Dashboard.
-* Design Operational Dashboard.
-* Design Trend Dashboard.
-* Generate SQL queries for all charts.
-* Create KPIs and business metrics. 
-
-## 4. SQL Analytics
-
-* Generate SQL queries for KPI calculation.
-* Create reusable datasets for Superset.
-* Optimize analytical SQL queries.
-
----
-
-# Key Features
-
-* Star Schema Data Warehouse
-* Automated ETL Pipeline
-* PostgreSQL (Supabase)
-* Apache Superset Dashboards
-* Idempotent Data Loading
-* Data Cleaning
-* Business KPI Reporting
-* SQL-based Analytics
-* Business Metrics & KPI Tracking
-* AI-assisted BI Development using Gemini CLI
-* AI Agent Evaluation using Golden Queries
-
-
-# PostgreSQL MCP Configuration
-
-Gemini CLI communicates with the PostgreSQL database using environment variables stored in the local .env file.
-
-POSTGRES_HOST=...
-POSTGRES_PORT=5432
-POSTGRES_DATABASE=...
-POSTGRES_USER=...
-POSTGRES_PASSWORD=...
-
-
-# Future Improvements
-
-Possible future improvements include:
-
-- AI-powered natural language querying through the MCP Agent
-- Automated dashboard generation
-- Incremental ETL loading
+- Real-time incremental ETL loading
 - Predictive analytics using machine learning
-- Real-time business monitoring
+- Automated dashboard generation via AI agents
+- Natural language querying through public MCP endpoint
+- Time-series forecasting for revenue trends
+
+---
+
+## 👤 Author
+
+**Eman Hrustemović**
+- 🔗 [GitHub](https://github.com/EmanHrustemovic)
+- 🔗 [LinkedIn](https://linkedin.com/in/eman-hrustemovic)
+- 📄 [ML Capstone Paper](https://emanhrustemovic.github.io/ml-capstone-paper)
