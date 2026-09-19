@@ -34,7 +34,7 @@ Key charts: Orders by Payment Type · Orders by Review Score · Top Sellers by R
 ---
 
 ### Dashboard 3 — Trend & Revenue Monitor
-![Trend & Revenue Monitor](screenshots/dashboard%20NO.3.png)
+![Trend & Revenue Monitor](screenshots/dashboard%20NO%20.3.png)
 
 Key charts: Revenue by Month (trend line) · Revenue by Payment Type · Top 10 Product Categories · Top 10 Sellers · Average Order Value by Review Score
 
